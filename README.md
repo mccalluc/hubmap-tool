@@ -23,15 +23,19 @@ Scope:
 - We are not discussing window management, resizing, etc.
 - We are not discussing actions internal to a tool… ie, panning the spatial view, or mouse position in tSNE, but it may be that we do want to publish more, eventually.
 
-## Spatial
-### Publish
-### Subscribe
-These events will populate the tool:
+Note:
+- Different frameworks have different expectations for the structure of events...
+Maybe objects make sense, or maybe pure JSON is better, but that doesn't need to be
+decided now.
+
+## Spatial Component
+
+These events populate the component:
 
 ```
 AddCells({
   "cell-42": {
-    "boundary": [[1234, 2345], [1235, 2366], ...], 
+    "boundary_poly": [[1234, 2345], [1235, 2366], ...],
     ...
   },
   ...
@@ -51,7 +55,75 @@ AddRGBImagery({
     [[r, g, b], [r, g, b], ...],
     [[r, g, b], [r, g, b], ...],
     ....
-  ]
+  ],
+  "boundary_rect": {
+    "top": 0,
+    "left": 0,
+    "right": 3000,
+    "bottom": 3000
+  }
+})
+
+AddScaleImagery({
+  "name": "Interesting black-white",
+  "imagery": [
+    [[value], [value], ...],
+    [[value], [value], ...],
+    ....
+  ],
+  "color_scale": {
+    0: [0, 0, 0],
+    1: [1, 1, 1]
+  }
+  "boundary_rect": {
+    "top": 0,
+    "left": 0,
+    "right": 3000,
+    "bottom": 3000
+  }
 })
 ```
 
+These events update the state:
+
+```
+HoverGene("gene-42")
+HoverMolecule("molecule-42")
+HoverCell("cell-42")
+
+SelectGenes(["gene-42", ...])
+SelectMolecules(["molecule-42", ...])
+SelectCells(["cell-42", ...])
+
+ColorCellsByScale({
+  "cells": {"cell-42": 0.5, ...},
+  "color_scale": {
+    0: [0, 0, 0],
+    1: [1, 1, 1]
+  }
+})
+ColorCellsByCategory({
+  "cells": {"cell-42": "category-1", ...},
+  "color_categories": {"category-1": [0, 0, 0], ...}
+})
+
+ColorMoleculesByScale(...)
+ColorMoleculesByCategory(...)
+
+ColorGenesByScale(...)
+ColorGenesByCategory(...)
+```
+
+These events are emitted:
+
+```
+HoverGene("gene-42")
+HoverMolecule("molecule-42")
+HoverCell("cell-42")
+
+SelectGenes(["gene-42", ...])
+SelectMolecules(["molecule-42", ...])
+SelectCells(["cell-42", ...])
+```
+
+## tSNE Component
