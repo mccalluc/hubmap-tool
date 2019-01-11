@@ -112,6 +112,14 @@ ColorMoleculesByCategory(...)
 
 ColorGenesByScale(...)
 ColorGenesByCategory(...)
+
+CreateCellSets(...)
+CreateMoleculeSets(...)
+CreateGeneSets(...)
+
+DeleteCellSets(...)
+DeleteMoleculeSets(...)
+DeleteGeneSets(...)
 ```
 
 These events are emitted:
@@ -127,3 +135,56 @@ SelectCells(["cell-42", ...])
 ```
 
 ## tSNE Component
+
+These events populate the component:
+
+```
+AddCells({
+  "cell-42": {
+    "tsne": [1234, 2345],
+    ...
+  },
+  ...
+})
+```
+
+These events update the state:
+
+```
+ColorCellsByScale(...)
+ColorCellsByCategory(...)
+
+HoverCell(...)
+SelectCells(...)
+```
+
+These events are emitted:
+
+```
+HoverCell(...)
+SelectCells(...)
+```
+
+## Heatmap Component
+
+These events populate the component:
+
+```
+AddCells({
+  "cell-42": {
+    "gene_expression": {"gene-42": 1234, ...},
+    ...
+  },
+  ...
+})
+```
+
+These events update the state:
+
+```
+ColorCellsByScale(...)
+ColorCellsByCategory(...)
+
+ColorGenesByScale(...)
+ColorGenesByCategory(...)
+```
